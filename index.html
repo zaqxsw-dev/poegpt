@@ -35,6 +35,10 @@
       font-size: 18px;
       font-weight: bold;
     }
+    .schematic {
+      margin-top: 20px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -53,6 +57,36 @@
       <button type="button" onclick="calculatePotions()">Calculate Potions</button>
     </form>
     <div class="result" id="result"></div>
+
+    <div class="schematic">
+      <h2>Crafting Schematic</h2>
+      <svg width="300" height="150" xmlns="http://www.w3.org/2000/svg">
+        <!-- Mushroom -->
+        <circle cx="50" cy="50" r="20" fill="brown" />
+        <text x="50" y="90" font-size="12" text-anchor="middle" fill="black">Mushroom</text>
+
+        <!-- Plus sign -->
+        <text x="90" y="55" font-size="20" text-anchor="middle" fill="black">+</text>
+
+        <!-- Blueberry -->
+        <circle cx="130" cy="50" r="20" fill="blue" />
+        <text x="130" y="90" font-size="12" text-anchor="middle" fill="black">Blueberry</text>
+
+        <!-- Plus sign -->
+        <text x="170" y="55" font-size="20" text-anchor="middle" fill="black">+</text>
+
+        <!-- Water -->
+        <rect x="190" y="30" width="40" height="40" fill="aqua" />
+        <text x="210" y="90" font-size="12" text-anchor="middle" fill="black">Water</text>
+
+        <!-- Equals sign -->
+        <text x="250" y="55" font-size="20" text-anchor="middle" fill="black">=</text>
+
+        <!-- Health Potion -->
+        <path d="M270,30 L290,30 L295,50 L285,70 L275,50 Z" fill="red" />
+        <text x="280" y="90" font-size="12" text-anchor="middle" fill="black">Potion</text>
+      </svg>
+    </div>
   </div>
 
   <script>
