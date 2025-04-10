@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Health Potion Calculator</title>
+  <title>Crafting Calculator</title>
   <style>
     /* General Styles */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #1a1a1a; /* Dark background similar to Enshrouded's theme */
-      color: #e0e0e0; /* Light text color for contrast */
+      background-color: #1a1a1a; /* Dark background */
+      color: #e0e0e0; /* Light text color */
       margin: 0;
       padding: 20px;
     }
@@ -18,13 +18,13 @@
       max-width: 500px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #262626; /* Slightly lighter background for card effect */
+      background-color: #262626; /* Slightly lighter background */
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     }
 
     h1, h2 {
-      color: #f58216; /* Enshrouded's accent orange color */
+      color: #f58216; /* Accent color */
       text-align: center;
     }
 
@@ -46,7 +46,7 @@
     button {
       width: 100%;
       padding: 12px;
-      background-color: #f58216; /* Enshrouded's orange for buttons */
+      background-color: #f58216; /* Accent color */
       color: #ffffff;
       font-size: 16px;
       border: none;
@@ -57,7 +57,7 @@
     }
 
     button:hover {
-      background-color: #e06d13; /* Slightly darker orange on hover */
+      background-color: #e06d13; /* Slightly darker accent */
     }
 
     .result {
@@ -76,12 +76,20 @@
       display: block;
       margin: 0 auto;
     }
+
+    .divider {
+      border-top: 1px solid #444444;
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Health Potion Calculator</h1>
-    <form id="potionForm">
+    <h1>Crafting Calculator</h1>
+
+    <!-- Health Potion Section -->
+    <h2>Health Potion</h2>
+    <form id="healthPotionForm">
       <label for="mushrooms">Mushrooms:</label>
       <input type="number" id="mushrooms" name="mushrooms" min="0" required>
 
@@ -91,12 +99,12 @@
       <label for="water">Water:</label>
       <input type="number" id="water" name="water" min="0" required>
 
-      <button type="button" onclick="calculatePotions()">Calculate Potions</button>
+      <button type="button" onclick="calculateHealthPotions()">Calculate Health Potions</button>
     </form>
-    <div class="result" id="result"></div>
+    <div class="result" id="healthPotionResult"></div>
 
     <div class="schematic">
-      <h2>Crafting Schematic</h2>
+      <h2>Health Potion Schematic</h2>
       <svg width="300" height="150" xmlns="http://www.w3.org/2000/svg">
         <!-- Mushroom -->
         <circle cx="50" cy="50" r="20" fill="brown" />
@@ -124,22 +132,73 @@
         <text x="280" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Potion</text>
       </svg>
     </div>
+
+    <div class="divider"></div>
+
+    <!-- Tea Packet Section -->
+    <h2>Tea Packet</h2>
+    <form id="teaPacketForm">
+      <label for="waterForTea">Water:</label>
+      <input type="number" id="waterForTea" name="waterForTea" min="0" required>
+
+      <label for="sashaHohol">Sasha Hohol:</label>
+      <input type="number" id="sashaHohol" name="sashaHohol" min="0" required>
+
+      <button type="button" onclick="calculateTeaPackets()">Calculate Tea Packets</button>
+    </form>
+    <div class="result" id="teaPacketResult"></div>
+
+    <div class="schematic">
+      <h2>Tea Packet Schematic</h2>
+      <svg width="300" height="150" xmlns="http://www.w3.org/2000/svg">
+        <!-- Water -->
+        <rect x="50" y="30" width="40" height="40" fill="aqua" />
+        <text x="70" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Water</text>
+
+        <!-- Plus sign -->
+        <text x="120" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
+
+        <!-- Sasha Hohol -->
+        <circle cx="170" cy="50" r="20" fill="purple" />
+        <text x="170" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Sasha</text>
+
+        <!-- Equals sign -->
+        <text x="220" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
+
+        <!-- Tea Packet -->
+        <rect x="240" y="30" width="30" height="50" fill="orange" />
+        <text x="255" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Tea</text>
+      </svg>
+    </div>
   </div>
 
   <script>
-    function calculatePotions() {
+    function calculateHealthPotions() {
       const mushrooms = parseInt(document.getElementById('mushrooms').value) || 0;
       const blueberries = parseInt(document.getElementById('blueberries').value) || 0;
       const water = parseInt(document.getElementById('water').value) || 0;
 
-      // Crafting formula: 1 mushroom + 1 blueberry + 1 water = 1 health potion
       const potions = Math.min(mushrooms, blueberries, water);
 
-      const resultDiv = document.getElementById('result');
+      const resultDiv = document.getElementById('healthPotionResult');
       if (potions > 0) {
-        resultDiv.textContent = `You can craft ${potions} health potion(s).`;
+        resultDiv.textContent = `You can craft ${potions} Health Potion(s).`;
       } else {
-        resultDiv.textContent = `Not enough resources to craft a potion.`;
+        resultDiv.textContent = `Not enough resources to craft a Health Potion.`;
+      }
+    }
+
+    function calculateTeaPackets() {
+      const water = parseInt(document.getElementById('waterForTea').value) || 0;
+      const sashaHohol = parseInt(document.getElementById('sashaHohol').value) || 0;
+
+      const teaPackets = Math.min(water, sashaHohol);
+
+      const resultDiv = document.getElementById('teaPacketResult');
+      if (teaPackets > 0) {
+        resultDiv.textContent = `You can craft ${teaPackets} Tea Packet(s).`;
+      } else {
+        resultDiv.textContent = `Not enough resources to craft a Tea Packet.`;
       }
     }
   </script>
