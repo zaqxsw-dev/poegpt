@@ -59,6 +59,7 @@
       <input type="number" id="moreDamage" placeholder="More Damage (%)" required>
       <input type="number" id="critChance" placeholder="Critical Strike Chance (%)" required>
       <input type="number" id="critMultiplier" placeholder="Critical Multiplier (e.g., 200)" required>
+      <input type="number" id="totemCount" placeholder="Number of Totems (e.g., 4)" required>
       <button type="button" onclick="calculateDamage()">Calculate</button>
     </form>
     <div class="result" id="result">Total Damage: 0</div>
@@ -72,14 +73,16 @@
       const moreDamage = parseFloat(document.getElementById('moreDamage').value) || 0;
       const critChance = parseFloat(document.getElementById('critChance').value) || 0;
       const critMultiplier = parseFloat(document.getElementById('critMultiplier').value) || 0;
+      const totemCount = parseInt(document.getElementById('totemCount').value) || 1;
 
       // Calculations
       const nonCritDamage = baseDamage * (1 + increasedDamage / 100) * (1 + moreDamage / 100);
       const critDamage = nonCritDamage * (1 + critMultiplier / 100);
-      const totalDamage = nonCritDamage * ((100 - critChance) / 100) + critDamage * (critChance / 100);
+      const totalDamagePerTotem = nonCritDamage * ((100 - critChance) / 100) + critDamage * (critChance / 100);
+      const totalDamage = totalDamagePerTotem * totemCount;
 
       // Displaying the result
-      document.getElementById('result').textContent = `Total Damage: ${totalDamage.toFixed(2)}`;
+      document.getElementById('result').textContent = `Total Damage (All Totems): ${totalDamage.toFixed(2)}`;
     }
   </script>
 </body>
