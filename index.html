@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Path of Exile Damage Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #2c2f33;
+      color: #ffffff;
+    }
+    .calculator {
+      background: #23272a;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 300px;
+    }
+    input {
+      width: calc(100% - 20px);
+      padding: 8px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+    }
+    button {
+      background: #7289da;
+      color: #ffffff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #5b6eae;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h1>PoE Damage Calculator</h1>
+    <form id="damageForm">
+      <input type="number" id="baseDamage" placeholder="Base Damage" required>
+      <input type="number" id="increasedDamage" placeholder="Increased Damage (%)" required>
+      <input type="number" id="moreDamage" placeholder="More Damage (%)" required>
+      <input type="number" id="critChance" placeholder="Critical Strike Chance (%)" required>
+      <input type="number" id="critMultiplier" placeholder="Critical Multiplier (e.g., 200)" required>
+      <button type="button" onclick="calculateDamage()">Calculate</button>
+    </form>
+    <div class="result" id="result">Total Damage: 0</div>
+  </div>
+  
+  <script>
+    function calculateDamage() {
+      // Fetching user inputs
+      const baseDamage = parseFloat(document.getElementById('baseDamage').value) || 0;
+      const increasedDamage = parseFloat(document.getElementById('increasedDamage').value) || 0;
+      const moreDamage = parseFloat(document.getElementById('moreDamage').value) || 0;
+      const critChance = parseFloat(document.getElementById('critChance').value) || 0;
+      const critMultiplier = parseFloat(document.getElementById('critMultiplier').value) || 0;
+
+      // Calculations
+      const nonCritDamage = baseDamage * (1 + increasedDamage / 100) * (1 + moreDamage / 100);
+      const critDamage = nonCritDamage * (1 + critMultiplier / 100);
+      const totalDamage = nonCritDamage * ((100 - critChance) / 100) + critDamage * (critChance / 100);
+
+      // Displaying the result
+      document.getElementById('result').textContent = `Total Damage: ${totalDamage.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
