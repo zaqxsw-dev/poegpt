@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crafting Calculator</title>
+  <title>Crafting Calculator with Map</title>
   <style>
     /* General Styles */
     body {
@@ -67,14 +67,37 @@
       text-align: center;
     }
 
-    .schematic {
-      margin-top: 20px;
+    .map-container {
+      margin-top: 30px;
       text-align: center;
     }
 
-    svg {
-      display: block;
-      margin: 0 auto;
+    .map {
+      position: relative;
+      display: inline-block;
+    }
+
+    .map img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .map-point {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #f58216;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+
+    .map-point.health {
+      background-color: #ff4d4d; /* Red for Health Potion points */
+    }
+
+    .map-point.tea {
+      background-color: #4d94ff; /* Blue for Tea Packet points */
     }
   </style>
 </head>
@@ -95,22 +118,16 @@
     </form>
     <div class="result" id="result"></div>
 
-    <div class="schematic">
-      <h2>Crafting Schematic</h2>
-      <svg id="schematic-svg" width="300" height="150" xmlns="http://www.w3.org/2000/svg">
-        <!-- Default schematic for Health Potion -->
-        <circle cx="50" cy="50" r="20" fill="brown" />
-        <text x="50" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Mushroom</text>
-        <text x="90" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
-        <circle cx="130" cy="50" r="20" fill="blue" />
-        <text x="130" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Blueberry</text>
-        <text x="170" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
-        <rect x="190" y="30" width="40" height="40" fill="aqua" />
-        <text x="210" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Water</text>
-        <text x="250" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
-        <path d="M270,30 L290,30 L295,50 L285,70 L275,50 Z" fill="red" />
-        <text x="280" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Potion</text>
-      </svg>
+    <div class="map-container">
+      <h2>Resource Map</h2>
+      <div class="map">
+        <img src="/map.jpg" alt="Game Map">
+        <!-- Randomly placed map points -->
+        <div class="map-point health" style="top: 30%; left: 40%;" title="Health Potion Resource"></div>
+        <div class="map-point health" style="top: 50%; left: 70%;" title="Health Potion Resource"></div>
+        <div class="map-point tea" style="top: 40%; left: 20%;" title="Tea Packet Resource"></div>
+        <div class="map-point tea" style="top: 60%; left: 50%;" title="Tea Packet Resource"></div>
+      </div>
     </div>
   </div>
 
@@ -122,37 +139,14 @@
           { name: "Blueberries", id: "blueberries" },
           { name: "Water", id: "water" }
         ],
-        calculate: (inputs) => Math.min(inputs.mushrooms, inputs.blueberries, inputs.water),
-        schematic: `
-          <circle cx="50" cy="50" r="20" fill="brown" />
-          <text x="50" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Mushroom</text>
-          <text x="90" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
-          <circle cx="130" cy="50" r="20" fill="blue" />
-          <text x="130" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Blueberry</text>
-          <text x="170" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
-          <rect x="190" y="30" width="40" height="40" fill="aqua" />
-          <text x="210" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Water</text>
-          <text x="250" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
-          <path d="M270,30 L290,30 L295,50 L285,70 L275,50 Z" fill="red" />
-          <text x="280" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Potion</text>
-        `
+        calculate: (inputs) => Math.min(inputs.mushrooms, inputs.blueberries, inputs.water)
       },
       "tea-packet": {
         ingredients: [
           { name: "Water", id: "water" },
           { name: "Sasha Hohol", id: "sasha" }
         ],
-        calculate: (inputs) => Math.min(inputs.water, inputs.sasha),
-        schematic: `
-          <rect x="50" y="30" width="40" height="40" fill="aqua" />
-          <text x="70" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Water</text>
-          <text x="120" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
-          <circle cx="170" cy="50" r="20" fill="purple" />
-          <text x="170" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Sasha</text>
-          <text x="220" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
-          <path d="M250,30 L270,30 L275,50 L265,70 L255,50 Z" fill="orange" />
-          <text x="265" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Tea</text>
-        `
+        calculate: (inputs) => Math.min(inputs.water, inputs.sasha)
       }
     };
 
@@ -160,7 +154,6 @@
       const recipeKey = document.getElementById("recipe-select").value;
       const recipe = recipes[recipeKey];
       const inputsContainer = document.getElementById("inputs-container");
-      const schematicSvg = document.getElementById("schematic-svg");
 
       // Update inputs
       inputsContainer.innerHTML = "";
@@ -177,9 +170,6 @@
         inputsContainer.appendChild(label);
         inputsContainer.appendChild(input);
       });
-
-      // Update schematic
-      schematicSvg.innerHTML = recipe.schematic;
     }
 
     function calculatePotions() {
