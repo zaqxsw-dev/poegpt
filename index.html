@@ -8,8 +8,8 @@
     /* General Styles */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #1a1a1a; /* Dark background */
-      color: #e0e0e0; /* Light text color */
+      background-color: #1a1a1a; /* Dark background similar to Enshrouded's theme */
+      color: #e0e0e0; /* Light text color for contrast */
       margin: 0;
       padding: 20px;
     }
@@ -18,13 +18,13 @@
       max-width: 500px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #262626; /* Slightly lighter background */
+      background-color: #262626; /* Slightly lighter background for card effect */
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     }
 
     h1, h2 {
-      color: #f58216; /* Accent color */
+      color: #f58216; /* Enshrouded's accent orange color */
       text-align: center;
     }
 
@@ -33,7 +33,7 @@
       color: #e0e0e0;
     }
 
-    input[type="number"] {
+    select, input[type="number"] {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
@@ -46,7 +46,7 @@
     button {
       width: 100%;
       padding: 12px;
-      background-color: #f58216; /* Accent color */
+      background-color: #f58216; /* Enshrouded's orange for buttons */
       color: #ffffff;
       font-size: 16px;
       border: none;
@@ -57,7 +57,7 @@
     }
 
     button:hover {
-      background-color: #e06d13; /* Slightly darker accent */
+      background-color: #e06d13; /* Slightly darker orange on hover */
     }
 
     .result {
@@ -76,131 +76,116 @@
       display: block;
       margin: 0 auto;
     }
-
-    .divider {
-      border-top: 1px solid #444444;
-      margin: 20px 0;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Crafting Calculator</h1>
+    <label for="recipe-select">Select Recipe:</label>
+    <select id="recipe-select" onchange="updateInputs()">
+      <option value="health-potion">Health Potion</option>
+      <!-- Add more recipes here as needed -->
+    </select>
 
-    <!-- Health Potion Section -->
-    <h2>Health Potion</h2>
-    <form id="healthPotionForm">
-      <label for="mushrooms">Mushrooms:</label>
-      <input type="number" id="mushrooms" name="mushrooms" min="0" required>
-
-      <label for="blueberries">Blueberries:</label>
-      <input type="number" id="blueberries" name="blueberries" min="0" required>
-
-      <label for="water">Water:</label>
-      <input type="number" id="water" name="water" min="0" required>
-
-      <button type="button" onclick="calculateHealthPotions()">Calculate Health Potions</button>
+    <form id="potionForm">
+      <div id="inputs-container">
+        <!-- Dynamic inputs will be inserted here -->
+      </div>
+      <button type="button" onclick="calculatePotions()">Calculate</button>
     </form>
-    <div class="result" id="healthPotionResult"></div>
+    <div class="result" id="result"></div>
 
     <div class="schematic">
-      <h2>Health Potion Schematic</h2>
-      <svg width="300" height="150" xmlns="http://www.w3.org/2000/svg">
-        <!-- Mushroom -->
+      <h2>Crafting Schematic</h2>
+      <svg id="schematic-svg" width="300" height="150" xmlns="http://www.w3.org/2000/svg">
+        <!-- Default schematic for Health Potion -->
         <circle cx="50" cy="50" r="20" fill="brown" />
         <text x="50" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Mushroom</text>
-
-        <!-- Plus sign -->
         <text x="90" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
-
-        <!-- Blueberry -->
         <circle cx="130" cy="50" r="20" fill="blue" />
         <text x="130" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Blueberry</text>
-
-        <!-- Plus sign -->
         <text x="170" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
-
-        <!-- Water -->
         <rect x="190" y="30" width="40" height="40" fill="aqua" />
         <text x="210" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Water</text>
-
-        <!-- Equals sign -->
         <text x="250" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
-
-        <!-- Health Potion -->
         <path d="M270,30 L290,30 L295,50 L285,70 L275,50 Z" fill="red" />
         <text x="280" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Potion</text>
-      </svg>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- Tea Packet Section -->
-    <h2>Tea Packet</h2>
-    <form id="teaPacketForm">
-      <label for="waterForTea">Water:</label>
-      <input type="number" id="waterForTea" name="waterForTea" min="0" required>
-
-      <label for="sashaHohol">Sasha Hohol:</label>
-      <input type="number" id="sashaHohol" name="sashaHohol" min="0" required>
-
-      <button type="button" onclick="calculateTeaPackets()">Calculate Tea Packets</button>
-    </form>
-    <div class="result" id="teaPacketResult"></div>
-
-    <div class="schematic">
-      <h2>Tea Packet Schematic</h2>
-      <svg width="300" height="150" xmlns="http://www.w3.org/2000/svg">
-        <!-- Water -->
-        <rect x="50" y="30" width="40" height="40" fill="aqua" />
-        <text x="70" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Water</text>
-
-        <!-- Plus sign -->
-        <text x="120" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
-
-        <!-- Sasha Hohol -->
-        <circle cx="170" cy="50" r="20" fill="purple" />
-        <text x="170" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Sasha</text>
-
-        <!-- Equals sign -->
-        <text x="220" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
-
-        <!-- Tea Packet -->
-        <rect x="240" y="30" width="30" height="50" fill="orange" />
-        <text x="255" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Tea</text>
       </svg>
     </div>
   </div>
 
   <script>
-    function calculateHealthPotions() {
-      const mushrooms = parseInt(document.getElementById('mushrooms').value) || 0;
-      const blueberries = parseInt(document.getElementById('blueberries').value) || 0;
-      const water = parseInt(document.getElementById('water').value) || 0;
+    const recipes = {
+      "health-potion": {
+        ingredients: [
+          { name: "Mushrooms", id: "mushrooms" },
+          { name: "Blueberries", id: "blueberries" },
+          { name: "Water", id: "water" }
+        ],
+        calculate: (inputs) => Math.min(inputs.mushrooms, inputs.blueberries, inputs.water),
+        schematic: `
+          <circle cx="50" cy="50" r="20" fill="brown" />
+          <text x="50" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Mushroom</text>
+          <text x="90" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
+          <circle cx="130" cy="50" r="20" fill="blue" />
+          <text x="130" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Blueberry</text>
+          <text x="170" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
+          <rect x="190" y="30" width="40" height="40" fill="aqua" />
+          <text x="210" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Water</text>
+          <text x="250" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
+          <path d="M270,30 L290,30 L295,50 L285,70 L275,50 Z" fill="red" />
+          <text x="280" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Potion</text>
+        `
+      }
+    };
 
-      const potions = Math.min(mushrooms, blueberries, water);
+    function updateInputs() {
+      const recipeKey = document.getElementById("recipe-select").value;
+      const recipe = recipes[recipeKey];
+      const inputsContainer = document.getElementById("inputs-container");
+      const schematicSvg = document.getElementById("schematic-svg");
 
-      const resultDiv = document.getElementById('healthPotionResult');
-      if (potions > 0) {
-        resultDiv.textContent = `You can craft ${potions} Health Potion(s).`;
+      // Update inputs
+      inputsContainer.innerHTML = "";
+      recipe.ingredients.forEach((ingredient) => {
+        const label = document.createElement("label");
+        label.setAttribute("for", ingredient.id);
+        label.textContent = `${ingredient.name}:`;
+        const input = document.createElement("input");
+        input.setAttribute("type", "number");
+        input.setAttribute("id", ingredient.id);
+        input.setAttribute("name", ingredient.id);
+        input.setAttribute("min", "0");
+        input.required = true;
+        inputsContainer.appendChild(label);
+        inputsContainer.appendChild(input);
+      });
+
+      // Update schematic
+      schematicSvg.innerHTML = recipe.schematic;
+    }
+
+    function calculatePotions() {
+      const recipeKey = document.getElementById("recipe-select").value;
+      const recipe = recipes[recipeKey];
+      const inputs = {};
+
+      recipe.ingredients.forEach((ingredient) => {
+        inputs[ingredient.id] = parseInt(document.getElementById(ingredient.id).value) || 0;
+      });
+
+      const result = recipe.calculate(inputs);
+
+      const resultDiv = document.getElementById("result");
+      if (result > 0) {
+        resultDiv.textContent = `You can craft ${result} item(s).`;
       } else {
-        resultDiv.textContent = `Not enough resources to craft a Health Potion.`;
+        resultDiv.textContent = `Not enough resources to craft the item.`;
       }
     }
 
-    function calculateTeaPackets() {
-      const water = parseInt(document.getElementById('waterForTea').value) || 0;
-      const sashaHohol = parseInt(document.getElementById('sashaHohol').value) || 0;
-
-      const teaPackets = Math.min(water, sashaHohol);
-
-      const resultDiv = document.getElementById('teaPacketResult');
-      if (teaPackets > 0) {
-        resultDiv.textContent = `You can craft ${teaPackets} Tea Packet(s).`;
-      } else {
-        resultDiv.textContent = `Not enough resources to craft a Tea Packet.`;
-      }
-    }
+    // Initial setup
+    updateInputs();
   </script>
 </body>
 </html>
