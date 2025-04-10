@@ -41,8 +41,11 @@
   <div class="container">
     <h1>Health Potion Calculator</h1>
     <form id="potionForm">
-      <label for="herbs">Herbs:</label>
-      <input type="number" id="herbs" name="herbs" min="0" required>
+      <label for="mushrooms">Mushrooms:</label>
+      <input type="number" id="mushrooms" name="mushrooms" min="0" required>
+
+      <label for="blueberries">Blueberries:</label>
+      <input type="number" id="blueberries" name="blueberries" min="0" required>
 
       <label for="water">Water:</label>
       <input type="number" id="water" name="water" min="0" required>
@@ -54,11 +57,12 @@
 
   <script>
     function calculatePotions() {
-      const herbs = parseInt(document.getElementById('herbs').value) || 0;
+      const mushrooms = parseInt(document.getElementById('mushrooms').value) || 0;
+      const blueberries = parseInt(document.getElementById('blueberries').value) || 0;
       const water = parseInt(document.getElementById('water').value) || 0;
 
-      // Crafting formula: 2 herbs + 1 water = 1 health potion
-      const potions = Math.min(Math.floor(herbs / 2), Math.floor(water / 1));
+      // Crafting formula: 1 mushroom + 1 blueberry + 1 water = 1 health potion
+      const potions = Math.min(mushrooms, blueberries, water);
 
       const resultDiv = document.getElementById('result');
       if (potions > 0) {
