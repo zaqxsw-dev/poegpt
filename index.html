@@ -84,7 +84,7 @@
     <label for="recipe-select">Select Recipe:</label>
     <select id="recipe-select" onchange="updateInputs()">
       <option value="health-potion">Health Potion</option>
-      <!-- Add more recipes here as needed -->
+      <option value="tea-packet">Tea Packet</option>
     </select>
 
     <form id="potionForm">
@@ -135,6 +135,23 @@
           <text x="250" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
           <path d="M270,30 L290,30 L295,50 L285,70 L275,50 Z" fill="red" />
           <text x="280" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Potion</text>
+        `
+      },
+      "tea-packet": {
+        ingredients: [
+          { name: "Water", id: "water" },
+          { name: "Sasha Hohol", id: "sasha" }
+        ],
+        calculate: (inputs) => Math.min(inputs.water, inputs.sasha),
+        schematic: `
+          <rect x="50" y="30" width="40" height="40" fill="aqua" />
+          <text x="70" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Water</text>
+          <text x="120" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">+</text>
+          <circle cx="170" cy="50" r="20" fill="purple" />
+          <text x="170" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Sasha</text>
+          <text x="220" y="55" font-size="20" text-anchor="middle" fill="#e0e0e0">=</text>
+          <path d="M250,30 L270,30 L275,50 L265,70 L255,50 Z" fill="orange" />
+          <text x="265" y="90" font-size="12" text-anchor="middle" fill="#e0e0e0">Tea</text>
         `
       }
     };
