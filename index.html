@@ -3,132 +3,140 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crafting Calculator with Map</title>
+  <title>ASCII Crafting Calculator</title>
   <style>
-    /* General Styles */
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #1a1a1a; /* Dark background similar to Enshrouded's theme */
-      color: #e0e0e0; /* Light text color for contrast */
+      font-family: monospace; /* Use monospace font for ASCII styling */
+      background-color: #1a1a1a; /* Dark background */
+      color: #e0e0e0; /* Light text color for good contrast */
       margin: 0;
       padding: 20px;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #262626; /* Slightly lighter background for card effect */
+      background-color: #262626; /* Slightly lighter background for content area */
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      text-align: left;
     }
 
     h1, h2 {
-      color: #f58216; /* Enshrouded's accent orange color */
+      color: #f58216; /* Accent orange color */
       text-align: center;
     }
 
-    label {
-      font-size: 14px;
+    pre {
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      background-color: #333333;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 20px 0;
       color: #e0e0e0;
     }
 
-    select, input[type="number"] {
+    select, input {
+      display: block;
       width: 100%;
-      padding: 10px;
       margin: 10px 0;
-      background-color: #333333; /* Dark input background */
+      background-color: #333333;
       color: #e0e0e0;
-      border: 1px solid #444444; /* Subtle border */
+      border: 1px solid #444444;
+      padding: 8px;
       border-radius: 4px;
     }
 
     button {
       width: 100%;
-      padding: 12px;
-      background-color: #f58216; /* Enshrouded's orange for buttons */
+      padding: 10px;
+      background-color: #f58216;
       color: #ffffff;
       font-size: 16px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      margin-top: 10px;
-      transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #e06d13; /* Slightly darker orange on hover */
+      background-color: #e06d13;
     }
 
     .result {
       margin-top: 20px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       text-align: center;
-    }
-
-    .map-container {
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .map {
-      position: relative;
-      display: inline-block;
-    }
-
-    .map img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .map-point {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: #f58216;
-      border-radius: 50%;
-      border: 2px solid #fff;
-      cursor: pointer;
-    }
-
-    .map-point.health {
-      background-color: #ff4d4d; /* Red for Health Potion points */
-    }
-
-    .map-point.tea {
-      background-color: #4d94ff; /* Blue for Tea Packet points */
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Crafting Calculator</h1>
-    <label for="recipe-select">Select Recipe:</label>
+    <h1>ASCII Crafting Calculator</h1>
+    
+    <pre>
+    +--------------------------------------------------+
+    |                   SELECT RECIPE                  |
+    +--------------------------------------------------+
+    </pre>
     <select id="recipe-select" onchange="updateInputs()">
       <option value="health-potion">Health Potion</option>
       <option value="tea-packet">Tea Packet</option>
     </select>
 
+    <pre>
+    +--------------------------------------------------+
+    |                   ENTER RESOURCES                |
+    +--------------------------------------------------+
+    </pre>
     <form id="potionForm">
       <div id="inputs-container">
         <!-- Dynamic inputs will be inserted here -->
       </div>
       <button type="button" onclick="calculatePotions()">Calculate</button>
     </form>
-    <div class="result" id="result"></div>
 
-    <div class="map-container">
-      <h2>Resource Map</h2>
-      <div class="map">
-        <img src="/poegpt/map.jpg" alt="Game Map">
-        <!-- Randomly placed map points -->
-        <div class="map-point health" style="top: 30%; left: 40%;" title="Health Potion Resource"></div>
-        <div class="map-point health" style="top: 50%; left: 70%;" title="Health Potion Resource"></div>
-        <div class="map-point tea" style="top: 40%; left: 20%;" title="Tea Packet Resource"></div>
-        <div class="map-point tea" style="top: 60%; left: 50%;" title="Tea Packet Resource"></div>
-      </div>
-    </div>
+    <pre class="result" id="result">
+    +--------------------------------------------------+
+    |                  RESULTS DISPLAY                 |
+    +--------------------------------------------------+
+    </pre>
+
+    <pre>
+    +--------------------------------------------------+
+    |                     RESOURCE MAP                 |
+    +--------------------------------------------------+
+    </pre>
+    <pre>
+    +----------------------------------------------------------------+
+    |                                                                |
+    |                      RESOURCE MAP                              |
+    |                                                                |
+    |                                                                |
+    |       +         *                             *               |
+    |                                                                |
+    |                                                                |
+    |                          HEALTH POTION                         |
+    |                  (Mushroom, Blueberry, Water)                  |
+    |                                                                |
+    |        *                    +                    *             |
+    |                                                                |
+    |                                                                |
+    |                 TEA PACKET (Water, Sasha Hohol)                |
+    |       +                                        +               |
+    |                                                                |
+    |                                                                |
+    |                                                                |
+    |                           *                                    |
+    |                                                                |
+    +----------------------------------------------------------------+
+    Legend:
+    * = Health Potion Resource
+    + = Tea Packet Resource
+    </pre>
   </div>
 
   <script>
@@ -155,7 +163,7 @@
       const recipe = recipes[recipeKey];
       const inputsContainer = document.getElementById("inputs-container");
 
-      // Update inputs
+      // Update inputs dynamically
       inputsContainer.innerHTML = "";
       recipe.ingredients.forEach((ingredient) => {
         const label = document.createElement("label");
